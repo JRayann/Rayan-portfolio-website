@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | Rayan Portfolio</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<main class="admin-page">
+
+  <header class="admin-header">
+    <div>
+      <span>ADMIN PANEL</span>
+      <h1>Service Requests</h1>
+    </div>
+
+    <div class="admin-actions">
+
+      <a href="#" id="logoutBtn">
+  Logout
+</a>
+
+  <a href="admin-settings.html">
+    Settings
+  </a>
+
+  <a href="index.html">
+    Back to Website
+  </a>
+
+</div>
+  </header>
+
+  <section class="stats">
+    <div>
+      <p>Total Requests</p>
+      <h2 id="totalRequests">0</h2>
+    </div>
+
+    <div>
+      <p>New Requests</p>
+      <h2 id="newRequests">0</h2>
+    </div>
+
+    <div>
+      <p>Completed</p>
+      <h2 id="completedRequests">0</h2>
+    </div>
+  </section>
+
+  <section class="table-card">
+    <div class="filters">
+
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search by name, service, or request ID..."
+  >
+
+<select id="serviceFilter">
+
+  <option value="all">All Services</option>
+
+  <option value="Power BI Dashboards">
+    Power BI Dashboards
+  </option>
+
+  <option value="Process Automation">
+    Process Automation
+  </option>
+
+  <option value="Asset Management">
+    Asset Management
+  </option>
+
+  <option value="Financial Analysis">
+    Financial Analysis
+  </option>
+
+</select>
+
+<select id="statusFilter">
+
+  <option value="all">All Status</option>
+
+  <option value="New">New</option>
+
+  <option value="In Progress">
+    In Progress
+  </option>
+
+  <option value="Completed">
+    Completed
+  </option>
+
+</select>
+
+  <button id="filterBtn">Filter</button>
+
+<button id="saveChangesBtn">Save Changes</button>
+
+</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Request ID</th>
+          <th>Name</th>
+          <th>Service</th>
+          <th>Email</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody id="requestsTable"></tbody>
+    </table>
+  </section>
+
+</main>
+
+<script>
+  if (localStorage.getItem("adminLoggedIn") !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
