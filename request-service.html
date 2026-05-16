@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Service | Rayan Alharthi</title>
+  <link rel="stylesheet" href="request-service.css">
+</head>
+<body>
+
+<header class="req-navbar">
+  <h2>Rayan Alharthi</h2>
+  <a href="services.html">← Back to Services</a>
+</header>
+
+<main class="req-page">
+  <section class="req-card">
+    <div class="req-header">
+      <span>SERVICE REQUEST</span>
+      <h1>Tell me what you need</h1>
+      <p>
+        Fill out the form below and describe the service you need, the current issue,
+        and the expected outcome.
+      </p>
+    </div>
+
+    <form 
+action="https://formspree.io/f/mjglnpwn" 
+method="POST"
+id="serviceForm"
+>
+      <div class="form-grid">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" placeholder="Enter your phone number">
+        </div>
+
+        <div class="field select-field">
+          <label>Requested Service</label>
+          <select id="serviceType" name="service" required>
+            <option value="">Select service</option>
+            <option>Power BI Dashboards</option>
+            <option>Process Automation</option>
+            <option>Asset Management</option>
+            <option>Financial Analysis</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Service Description</label>
+        <textarea name="description" placeholder="Describe the service you want..." required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Problem / Current Situation</label>
+        <textarea name="problem" placeholder="Explain the problem you are facing..." required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Expected Outcome</label>
+        <textarea name="outcome" placeholder="What result do you expect from this service?"></textarea>
+      </div>
+      <input type="text" name="_gotcha" style="display:none">
+
+      <button type="submit">Submit Request</button>
+    </form>
+    <p id="successMessage" class="success-message">
+  Your request has been submitted successfully.
+</p>
+  </section>
+</main>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const selectedService = params.get("service");
+
+  if (selectedService) {
+    document.getElementById("serviceType").value = selectedService;
+  }
+</script>
+
+<script>
+const form = document.getElementById("serviceForm");
+const successMessage = document.getElementById("successMessage");
+const submitBtn = form.querySelector("button[type='submit']");
+
+form.addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Sending...";
+
+  const data = new FormData(form);
+
+  try{
+
+    const response = await fetch(form.action,{
+      method:"POST",
+      body:data,
+      headers:{
+        "Accept":"application/json"
+      }
+    });
+
+    if(response.ok){
+
+      successMessage.style.display = "block";
+
+      successMessage.textContent =
+      "Your request has been submitted successfully.";
+
+      form.reset();
+
+    }else{
+
+      successMessage.style.display = "block";
+
+      successMessage.textContent =
+      "Something went wrong. Please try again.";
+
+    }
+
+  }catch(error){
+
+    successMessage.style.display = "block";
+
+    successMessage.textContent =
+    "Connection error. Please try again later.";
+
+  }
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = "Submit Request";
+
+});
+</script>
+
+</body>
+</html>
